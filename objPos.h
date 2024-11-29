@@ -1,4 +1,4 @@
-#ifndef OBJPOS_H
+#ifndef OBJPOS_H //doneeeeeeeeeeeeeeeeeeeeee
 #define OBJPOS_H
 
 // Not really a C++ thing
@@ -19,7 +19,10 @@ class objPos
         
         // Respect the rule of six / minimum four
         // [TODO] Implement the missing special member functions to meet the minimum four rule
-        
+        ~objPos();
+        objPos(const objPos &p);
+        objPos &operator=(const objPos &p);
+
         void setObjPos(objPos o);        
         void setObjPos(int xPos, int yPos, char sym);  
 
