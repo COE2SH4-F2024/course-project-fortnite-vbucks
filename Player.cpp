@@ -8,7 +8,6 @@ Player::Player(GameMechs *thisGMRef, Food *foodBucketRef)
     mainFoodBucketRef = foodBucketRef;
 
     // more actions to be included
-    // mainGameMechsRef->getBoardSizeX() / 2, mainGameMechsRef->getBoardSizeY() / 2, '*')
     playerPosArrayList = new objPosArrayList();
     playerPosArrayList->insertHead(objPos(mainGameMechsRef->getBoardSizeX() / 2, mainGameMechsRef->getBoardSizeY() / 2, '*'));
 }
@@ -119,24 +118,21 @@ void Player::movePlayer()
             if (mainFoodBucketRef->getFoodPos()->getElement(i).pos->x == newHead.pos->x && mainFoodBucketRef->getFoodPos()->getElement(i).pos->y == newHead.pos->y) // if food eaten, check if special food
             {
                 foodEaten = true;
-                mainGameMechsRef->incrementScore();
-                if (mainFoodBucketRef->getFoodPos()->getElement(i).getSymbol() == 'X')
-                {
-                    for (int j = 0; j < 20; j++)
+                char foodType = mainFoodBucketRef->getFoodPos()->getElement(i).getSymbol();
+
+                // Updated scoring system:
+                if (foodType == 'O') {
+                    mainGameMechsRef->incrementScore();  // Eating 'O' adds 1 point
+                }
+                else if (foodType == 'X') {
+                    mainGameMechsRef->incrementScore();  // Eating 'X' adds 5 points
+                    for (int j = 0; j < 4; j++)  // Adds 4 more points (total 5)
                         mainGameMechsRef->incrementScore();
                 }
-                else if (mainFoodBucketRef->getFoodPos()->getElement(i).getSymbol() == 'Y')
-                {
-                    if (playerPosArrayList->getSize() <= 5)
-                    {
-                        for (int j = 0; j < playerPosArrayList->getSize() - 1; j++)
-                            playerPosArrayList->removeTail();
-                    }
-                    else
-                    {
-                        for (int j = 0; j < 5; j++)
-                            playerPosArrayList->removeTail();
-                    }
+                else if (foodType == 'Y') {
+                    mainGameMechsRef->decrementScore();  // Eating 'Y' subtracts 5 points
+                    for (int j = 0; j < 4; j++)  // Subtracting 5 points when eating 'Y'
+                        mainGameMechsRef->decrementScore();
                 }
                 mainFoodBucketRef->generateFood(mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
                 break;

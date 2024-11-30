@@ -1,13 +1,17 @@
 #include "GameMechs.h" //doneeeeeeeeeeee
+// dhruv edits done
 
 GameMechs::GameMechs()
 {
     boardSizeX = 30;
     boardSizeY = 15;
+
     exitFlag = false;
     loseFlag = false;
+
     score = 0;
     input = 0;
+
     srand(time(NULL));
     foodPos = objPos(0, 0, 'O');
 }
@@ -15,16 +19,19 @@ GameMechs::GameMechs()
 GameMechs::GameMechs(int boardX, int boardY)
 {
     boardSizeX = boardX;
-    boardSizeY = boardY;
-    exitFlag = false;
-    loseFlag = false;
+    boardSizeY = boardY; 
+    
     score = 0;
     input = 0;
+
+    exitFlag = false;
+    loseFlag = false;
 }
 
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
+    
 }
 
 bool GameMechs::getExitFlagStatus() const
@@ -83,3 +90,7 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
+void GameMechs::decrementScore()
+{
+    score--;
+}

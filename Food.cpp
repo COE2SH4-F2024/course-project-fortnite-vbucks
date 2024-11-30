@@ -6,6 +6,7 @@
 Food::Food(Player *thisPlayerRef)
 {
     playerRef = thisPlayerRef;
+    
     foodBucket = new objPosArrayList();
     srand(time(NULL));
 }

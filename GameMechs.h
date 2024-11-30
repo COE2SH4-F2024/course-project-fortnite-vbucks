@@ -1,4 +1,5 @@
 #ifndef GAMEMECHS_H //doneeeeeeeeeeeeee
+//dhruv edits done
 #define GAMEMECHS_H
 
 #include <cstdlib>
@@ -20,7 +21,7 @@ private:
     int boardSizeX;
     int boardSizeY;
 
-    objPos foodPos;
+    objPos foodPos; //change to foodP
 
 public:
     GameMechs();
@@ -41,6 +42,7 @@ public:
 
     int getScore() const;
     void incrementScore();
+    void decrementScore(); //decremement method
 };
 
 #endif

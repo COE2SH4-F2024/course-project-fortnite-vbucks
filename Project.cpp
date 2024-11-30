@@ -9,10 +9,9 @@ using namespace std;
 
 #define DELAY_CONST 100000
 
-GameMechs *mainGameMechs;
-
-Player *mainPlayer;
-Food *mainFoodBucket;
+GameMechs *mechanics; 
+Player *current_Player;  
+Food *foodGen;  
 
 void Initialize(void);
 void GetInput(void);
@@ -26,7 +25,7 @@ int main(void)
 
     Initialize();
 
-    while (!mainGameMechs->getExitFlagStatus())
+    while (!mechanics->getExitFlagStatus()) 
     {
         GetInput();
         RunLogic();
@@ -42,92 +41,104 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    mainGameMechs = new GameMechs();
-    mainPlayer = new Player(mainGameMechs, mainFoodBucket);
-    mainFoodBucket = new Food(mainPlayer);
-    mainPlayer = new Player(mainGameMechs, mainFoodBucket);
-    mainFoodBucket->generateFood(mainGameMechs->getBoardSizeX(), mainGameMechs->getBoardSizeY());
+    mechanics = new GameMechs();
+
+    current_Player = new Player(mechanics, foodGen);  
+    current_Player = new Player(mechanics, foodGen); 
+    
+    foodGen = new Food(current_Player); 
+    foodGen->generateFood(mechanics->getBoardSizeX(), mechanics->getBoardSizeY()); 
 }
 
 void GetInput(void)
 {
     if (MacUILib_hasChar())
-        mainGameMechs->setInput(MacUILib_getChar());
+    {
+         mechanics->setInput(MacUILib_getChar()); 
+    }
+       
 }
 
 void RunLogic(void)
 {
-    mainPlayer->updatePlayerDir();
-    mainPlayer->movePlayer();
+    current_Player->updatePlayerDir();  
+    current_Player->movePlayer();  
 }
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
-    MacUILib_printf("Snake!\n (O = Regular food, X = +20 score, Y = -5 length)\n");
+    MacUILib_printf("Snake Game\nFood Menu:\nO = +1 point, X = +5 points, Y = -5 points\n");
 
     // Iterate over the entire board
-    for (int i = 0; i < mainGameMechs->getBoardSizeY(); i++)
+    for (int i = 0; i < mechanics->getBoardSizeY(); i++) 
     {
-        for (int j = 0; j < mainGameMechs->getBoardSizeX(); j++)
+        for (int j = 0; j < mechanics->getBoardSizeX(); j++)  
         {
-            // Draw the border
-            if (i == 0 || j == 0 || i == (mainGameMechs->getBoardSizeY() - 1) || j == (mainGameMechs->getBoardSizeX() - 1))
+            //border gen
+            if (i == 0 || j == 0 || i == (mechanics->getBoardSizeY() - 1) || j == (mechanics->getBoardSizeX() - 1))
             {
                 MacUILib_printf("#");
             }
             else
             {
-                bool printed = false; // Flag to track if we've printed something
+                bool printed = false; //Track if we've printed something
 
-                // First, print the snake
-                for (int k = 0; k < mainPlayer->getPlayerPos()->getSize(); k++)
+                //Print snake
+                for (int k = 0; k < current_Player->getPlayerPos()->getSize(); k++) 
                 {
-                    if (mainPlayer->getPlayerPos()->getElement(k).pos->x == j && mainPlayer->getPlayerPos()->getElement(k).pos->y == i)
+                    if (current_Player->getPlayerPos()->getElement(k).pos->x == j && current_Player->getPlayerPos()->getElement(k).pos->y == i) 
                     {
-                        MacUILib_printf("%c", mainPlayer->getPlayerPos()->getElement(k).getSymbol());
+                        MacUILib_printf("%c", current_Player->getPlayerPos()->getElement(k).getSymbol());  
                         printed = true;
-                        break; // Stop here if we printed the snake part
+                        break; //stop if snake printed
                     }
                 }
 
-                // Then, print food, but only if this spot wasn't taken by the snake
+                // print food in empty spots
                 if (!printed)
                 {
                     for (int k = 0; k < 5; k++)
                     {
-                        if (mainFoodBucket->getFoodPos()->getElement(k).pos->x == j && mainFoodBucket->getFoodPos()->getElement(k).pos->y == i)
+                        if (foodGen->getFoodPos()->getElement(k).pos->x == j && foodGen->getFoodPos()->getElement(k).pos->y == i)
                         {
-                            MacUILib_printf("%c", mainFoodBucket->getFoodPos()->getElement(k).getSymbol());
+                            MacUILib_printf("%c", foodGen->getFoodPos()->getElement(k).getSymbol()); 
                             printed = true;
-                            break; // Stop here if we printed the food
+                            break; //stop if food generated
                         }
                     }
                 }
 
-                // If neither the snake nor food were printed, print an empty space
+                //print empty space if no food or snake parts
                 if (!printed)
+                {
                     MacUILib_printf(" ");
+                }
+                    
             }
         }
         MacUILib_printf("\n");
     }
 
-    // Display score and game over message if needed
-    MacUILib_printf("Score: %d\n", mainGameMechs->getScore());
-    if (mainGameMechs->getLoseFlagStatus())
-        MacUILib_printf("You Lose");
+    //Score and game over
+    MacUILib_printf("Score: %d\n", mechanics->getScore());
+
+    if (mechanics->getLoseFlagStatus())
+    {
+        MacUILib_printf("Game Over");
+    }
+        
 }
 
 void LoopDelay(void)
 {
-    MacUILib_Delay(DELAY_CONST); // 0.1s delay
+    MacUILib_Delay(DELAY_CONST); // 0.08s delay
 }
 
 void CleanUp(void)
 {
-    delete mainGameMechs;
-    delete mainPlayer;
-    delete mainFoodBucket;
+    delete mechanics; 
+    delete current_Player; 
+    delete foodGen; 
     MacUILib_uninit();
 }
