@@ -120,7 +120,7 @@ void DrawScreen(void)
     }
 
     //Message and game over
-    MacUILib_printf("ESC to quit\n\nScore: %d\n", mechanics->getScore());
+    MacUILib_printf("ESC to quit\n\n.\Score: %d\n", mechanics->getScore());
 
     if (mechanics->getLoseFlagStatus())
     {
