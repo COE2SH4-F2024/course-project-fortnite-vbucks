@@ -1,5 +1,5 @@
 #include "objPosArrayList.h" //doneeeeeeeeeeeeeeeeeeeeeeeee
-
+//not really much to change/dhruv edits done
 // Paste your Tested implementation here.
 // Paste your Tested implementation here.
 // Paste your Tested implementation here.
@@ -26,7 +26,9 @@ void objPosArrayList::insertHead(objPos thisPos)
     {
         aList[i] = aList[i - 1];
     }
+
     aList[0] = thisPos;
+
     listSize++;
 }
 

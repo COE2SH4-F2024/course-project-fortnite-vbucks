@@ -1,6 +1,6 @@
 #ifndef FOOD_H //doneeeeeeeeeeeeee
 #define FOOD_H
-
+//dhruv edits done
 #include "GameMechs.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
@@ -21,9 +21,8 @@ public:
     // More methods to be added here
 
 private:
-    objPosArrayList *foodBucket;
+    objPosArrayList *foodGenerator;
 
-    // Need a reference to the Player
     Player *playerRef;
 };
 

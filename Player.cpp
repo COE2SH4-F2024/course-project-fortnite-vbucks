@@ -1,11 +1,11 @@
 #include "Player.h" //doneeeeeeeeee
 #include "Food.h"
-
-Player::Player(GameMechs *thisGMRef, Food *foodBucketRef)
+// dhruv edits
+Player::Player(GameMechs *thisGMRef, Food *foodGenRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-    mainFoodBucketRef = foodBucketRef;
+    mainFoodGenRef = foodGenRef;
 
     // more actions to be included
     playerPosArrayList = new objPosArrayList();
@@ -32,7 +32,7 @@ void Player::updatePlayerDir()
         switch (input)
         {
 
-        case ' ': // exit
+        case 27: // exit
             mainGameMechsRef->setExitTrue();
             break;
         case 'w':
@@ -115,10 +115,10 @@ void Player::movePlayer()
 
         for (int i = 0; i < 5; i++)
         {
-            if (mainFoodBucketRef->getFoodPos()->getElement(i).pos->x == newHead.pos->x && mainFoodBucketRef->getFoodPos()->getElement(i).pos->y == newHead.pos->y) // if food eaten, check if special food
+            if (mainFoodGenRef->getFoodPos()->getElement(i).pos->x == newHead.pos->x && mainFoodGenRef->getFoodPos()->getElement(i).pos->y == newHead.pos->y) // if food eaten, check if special food
             {
                 foodEaten = true;
-                char foodType = mainFoodBucketRef->getFoodPos()->getElement(i).getSymbol();
+                char foodType = mainFoodGenRef->getFoodPos()->getElement(i).getSymbol();
 
                 // Updated scoring system:
                 if (foodType == 'O') {
@@ -134,7 +134,7 @@ void Player::movePlayer()
                     for (int j = 0; j < 4; j++)  // Subtracting 5 points when eating 'Y'
                         mainGameMechsRef->decrementScore();
                 }
-                mainFoodBucketRef->generateFood(mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+                mainFoodGenRef->generateFood(mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
                 break;
             }
         }

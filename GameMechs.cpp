@@ -1,5 +1,5 @@
 #include "GameMechs.h" //doneeeeeeeeeeee
-// dhruv edits done
+// dhruv edits done (most of this stuff was given)
 
 GameMechs::GameMechs()
 {

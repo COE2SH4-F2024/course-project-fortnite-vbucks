@@ -4,7 +4,7 @@
 #include "GameMechs.h"
 #include "Player.h"
 #include "Food.h"
-
+//dhruv edits done
 using namespace std;
 
 #define DELAY_CONST 100000
@@ -44,9 +44,8 @@ void Initialize(void)
     mechanics = new GameMechs();
 
     current_Player = new Player(mechanics, foodGen);  
-    current_Player = new Player(mechanics, foodGen); 
-    
     foodGen = new Food(current_Player); 
+    current_Player = new Player(mechanics, foodGen); 
     foodGen->generateFood(mechanics->getBoardSizeX(), mechanics->getBoardSizeY()); 
 }
 
@@ -120,8 +119,8 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
-    //Score and game over
-    MacUILib_printf("Score: %d\n", mechanics->getScore());
+    //Message and game over
+    MacUILib_printf("ESC to quit\n\nScore: %d\n", mechanics->getScore());
 
     if (mechanics->getLoseFlagStatus())
     {

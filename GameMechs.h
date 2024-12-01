@@ -1,5 +1,5 @@
 #ifndef GAMEMECHS_H //doneeeeeeeeeeeeee
-//dhruv edits done
+//dhruv edits done (all this stuff was given)
 #define GAMEMECHS_H
 
 #include <cstdlib>

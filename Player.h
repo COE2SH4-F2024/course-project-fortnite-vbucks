@@ -26,7 +26,7 @@ public:
         STOP
     }; // This is the direction state
 
-    Player(GameMechs *thisGMRef, Food *foodBucketRef);
+    Player(GameMechs *thisGMRef, Food *foodGenRef);
     ~Player();
 
     objPosArrayList *getPlayerPos() const;
@@ -41,7 +41,7 @@ private:
 
     // Need a reference to the Main Game Mechanisms
     GameMechs *mainGameMechsRef;
-    Food *mainFoodBucketRef;
+    Food *mainFoodGenRef;
 };
 
 #endif
