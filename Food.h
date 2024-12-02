@@ -9,7 +9,7 @@
 class Player;
 
 class Food
-{
+{ 
 
 public:
     Food(Player *thisPlayerRef);
