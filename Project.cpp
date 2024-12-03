@@ -67,7 +67,7 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
-    MacUILib_printf("Snake!\nWatch your step(slither)...\nFood Menu:O = +1 point, X = +5 points, Y = -5 points\n");
+    MacUILib_printf("Snake!\nWatch your step (or slither)...\nFood Menu: O = +1 point and length, X = +5 points, Y = -5 points\n");
 
     // Iterate over the entire board
     for(int i = 0; i < mechanics->getBoardSizeY(); i++) //create the board
